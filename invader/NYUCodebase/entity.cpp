@@ -20,18 +20,49 @@ Entity::Entity(float x, float y, float w, float h, int hp, int spriteType){
 
 void Entity::DrawSprite(GLint texture) {
     float spriteSheetSize = 256.0;
-    float player[4] = {0.0, 0.0, 115.0, 75.0};
+    float player[] = {0.0, 0.0, 115.0, 75.0};
+    float enemy1[] = {0.0, 77.0, 104.0, 84.0};
+    float enemy2[] = {0.0, 163.0, 103.0, 84.0};
+    float enemy3[] = {105.0, 163.0, 103.0, 84.0};
     
     float xcoord = 0;
     float ycoord = 0;
     float wspec = 0;
     float hspec = 0;
     
+//    <SubTexture name="enemy1.png" x="0" y="77" width="104" height="84"/>
+//    <SubTexture name="enemy2.png" x="0" y="163" width="103" height="84"/>
+//    <SubTexture name="enemy3.png" x="105" y="163" width="103" height="84"/>
+//    <SubTexture name="enemybullet.png" x="106" y="116" width="9" height="37"/>
+//    <SubTexture name="player.png" x="0" y="0" width="112" height="75"/>
+//    <SubTexture name="playerbullet.png" x="106" y="77" width="9" height="37"/>
+    
     if (type == 0){
         xcoord = player[0]/256.0;
         ycoord = player[1]/256.0;
         wspec = player[2]/256.0;
         hspec = player[3]/256.0;
+    }
+    else if(type == 1){
+        xcoord = enemy1[0]/256.0;
+        ycoord = enemy1[1]/256.0;
+        wspec = enemy1[2]/256.0;
+        hspec = enemy1[3]/256.0;
+    }
+
+    else if(type == 2){
+        xcoord = enemy2[0]/256.0;
+        ycoord = enemy2[1]/256.0;
+        wspec = enemy2[2]/256.0;
+        hspec = enemy2[3]/256.0;
+    }
+
+    
+    else if(type == 3){
+        xcoord = enemy3[0]/256.0;
+        ycoord = enemy3[1]/256.0;
+        wspec = enemy3[2]/256.0;
+        hspec = enemy3[3]/256.0;
     }
     
     
