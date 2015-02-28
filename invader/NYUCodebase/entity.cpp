@@ -14,6 +14,9 @@ Entity::Entity(float x, float y, float w, float h, int hp, int spriteType){
     collisionLeft = false;
     collisionRight = false;
     collisionTop = false;
+    if (spriteType >= 1 and spriteType <= 3) {
+        xdir = 1.0;
+    }
     
 }
 
@@ -79,7 +82,6 @@ void Entity::DrawSprite(GLint texture) {
     glVertexPointer(2, GL_FLOAT, 0, quad);
     glEnableClientState(GL_VERTEX_ARRAY);
     
-//    GLfloat quadUVs[] = {0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0};
     GLfloat quadUVs[] = {xcoord, ycoord, xcoord, ycoord + hspec, xcoord+wspec, ycoord+hspec, xcoord+wspec, ycoord};
     
     glTexCoordPointer(2, GL_FLOAT, 0, quadUVs);
@@ -89,4 +91,36 @@ void Entity::DrawSprite(GLint texture) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glDrawArrays(GL_QUADS, 0, 4);
+}
+
+bool Entity::checkWallCollision(){
+    if (xpos < -1.25 or xpos > 1.25){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void Entity::moveLeft(float elapsed){
+    if (xpos >= -1.25){
+        xpos -= elapsed;
+    }
+}
+
+void Entity::moveRight(float elapsed){
+    if (xpos <= 1.25) {
+        xpos += elapsed;
+    }
+
+}
+
+void Entity::reverseAIMove(){
+    xdir *= -1.0;
+}
+
+void Entity::AIMove(float elapsed){
+    checkWallCollision();
+    xpos += elapsed * 0.3 * xdir;
+    
 }

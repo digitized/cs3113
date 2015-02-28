@@ -36,6 +36,8 @@ void GameApp::Init(){
     initializeAssets();
 }
 
+
+////RENDER
 void GameApp::Render(){
     glClear(GL_COLOR_BUFFER_BIT);
     switch(state){
@@ -48,6 +50,7 @@ void GameApp::Render(){
     }
     
 }
+
 
 void GameApp::RenderMenu(){
     glLoadIdentity();
@@ -65,6 +68,7 @@ void GameApp::RenderGame(){
     SDL_GL_SwapWindow(displayWindow);
 }
 
+////UPDATE
 void GameApp::UpdateMenu(){
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
@@ -77,11 +81,31 @@ void GameApp::UpdateMenu(){
     }
 
 }
-void GameApp::UpdateGame(){
+void GameApp::UpdateGame(float elapsed){
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
             done = true; }
     }
+    if(keys[SDL_SCANCODE_LEFT]) {
+        Entities[0].moveLeft(elapsed);
+    } else if(keys[SDL_SCANCODE_RIGHT]) {
+        Entities[0].moveRight(elapsed);
+    }
+    bool hasCollided = false;
+    for(int enemy = 1; enemy < 16; enemy++){
+        if(Entities[enemy].checkWallCollision()){
+            hasCollided = true;
+        }
+    }
+    if (hasCollided){
+        for(int enemy = 1; enemy < 16; enemy++){
+                Entities[enemy].reverseAIMove();
+        }
+    }
+    for(int enemy = 1; enemy < 16; enemy++){
+        Entities[enemy].AIMove(elapsed);
+    }
+    
 }
 void GameApp::Update(float elapsed){
     switch (state){
@@ -89,9 +113,10 @@ void GameApp::Update(float elapsed){
             UpdateMenu();
             break;
         case 1:
-            UpdateGame();
+            UpdateGame(elapsed);
             break;
     }
+
 }
 
 bool GameApp::UpdateAndRender(){
@@ -116,7 +141,7 @@ void GameApp::initializeAssets(){
     //Enemies
     for(int rows = 0; rows < 3; rows++){
         for(int num = 0; num < 5; num++){
-            Entities.push_back(Entity(-1.0+num*0.2, 0.8-rows*0.2, 0.15, 0.15, 1, 3 - rows));
+            Entities.push_back(Entity(-1.0+num*0.5, 0.8-rows*0.2, 0.15, 0.15, 1, 3 - rows));
         }
     }
 

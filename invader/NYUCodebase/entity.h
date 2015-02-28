@@ -19,6 +19,11 @@ public:
     Entity(float x, float y, float w, float h, int hp, int spriteType);
     
     void DrawSprite(GLint texture);
+    void moveLeft(float elapsed);
+    void moveRight(float elapsed);
+    void AIMove(float elapsed);
+    void reverseAIMove();
+    bool checkWallCollision();
     
 private:
     int hitpoints;

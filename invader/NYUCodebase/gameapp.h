@@ -28,7 +28,7 @@ public:
     void RenderMenu();
     void RenderGame();
     void UpdateMenu();
-    void UpdateGame();
+    void UpdateGame(float elapsed);
     void Update(float elapsed);
     bool UpdateAndRender();
     
