@@ -29,12 +29,46 @@ bool Bullet::isActive(){
     return active;
 }
 
-void Bullet::updateBullet(float elapsed){
+void Bullet::updateBullet(float elapsed, std::vector<Entity> *entities){
     if (active == true) {
         ypos += elapsed * 0.3;
     }
     if (ypos >= 1.0 || ypos <= -1.0){
         active = false;
+    }
+    if (active){
+        for (int eIndex = 0; eIndex < 19; eIndex++){
+            if ((*entities)[eIndex].isActive()){
+                float bulletTop = ypos+0.5*height;
+                float bulletBottom = ypos-0.5*height;
+                float bulletLeft = xpos - 0.5*width;
+                float bulletRight = xpos + 0.5*width;
+                
+                float entityTop = (*entities)[eIndex].getYPos()+0.5*(*entities)[eIndex].getHeight();
+                float entityBottom = (*entities)[eIndex].getYPos()-0.5*(*entities)[eIndex].getHeight();
+                float entityLeft = (*entities)[eIndex].getXPos()-0.5*(*entities)[eIndex].getWidth();
+                float entityRight = (*entities)[eIndex].getXPos()+0.5*(*entities)[eIndex].getWidth();
+                
+                //Check Collision
+                if((bulletTop > entityBottom and bulletTop < entityTop) || (bulletBottom > entityBottom and bulletBottom < entityTop)){
+                    if (bulletLeft < entityRight && bulletLeft > entityLeft){
+                        active = false;
+                        (*entities)[eIndex].hitpointMod(-1);
+                        if ((*entities)[eIndex].getHP() <= 0){
+                            (*entities)[eIndex].destroyEntity();
+                        }
+                        
+                    }
+                    else if (bulletRight > entityLeft && bulletRight < entityRight){
+                        active = false;
+                        (*entities)[eIndex].hitpointMod(-1);
+                        if ((*entities)[eIndex].getHP() <= 0){
+                            (*entities)[eIndex].destroyEntity();
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

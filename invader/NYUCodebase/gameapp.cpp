@@ -75,23 +75,18 @@ void GameApp::UpdateMenu(){
     }
 
 }
-void GameApp::PlayerFire(){
-    int bulletSlot = -1;
-    
-    for (int b = 0; b < 10 && b != -1; b++){
-        if (Bullets[b].isActive() == false){
-            bulletSlot = b;
-            break;
-        }
-    }
-    Bullets[bulletSlot].Shoot(Entities[0].getXPos(), Entities[0].getYPos(), 0);
-}
+
 void GameApp::UpdateGame(float elapsed){
+    shootTimer += elapsed;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
             done = true; }
         else if(keys[SDL_SCANCODE_SPACE]) { // Shoot
-            GameApp::PlayerFire();
+            if (shootTimer > 0.3){
+                GameApp::PlayerFire();
+                shootTimer = 0;
+            }
+            
         }
     }
     if(keys[SDL_SCANCODE_LEFT]) {         // Move Left
@@ -115,7 +110,7 @@ void GameApp::UpdateGame(float elapsed){
         Entities[enemy].AIMove(elapsed);
     }
     for(int bulletIndex = 0; bulletIndex < 10; bulletIndex++){
-        Bullets[bulletIndex].updateBullet(elapsed);
+        Bullets[bulletIndex].updateBullet(elapsed, &Entities);
     }
     
 }
@@ -140,7 +135,17 @@ bool GameApp::UpdateAndRender(){
     Render();
     return done;
 }
-
+void GameApp::PlayerFire(){
+    int bulletSlot = -1;
+    
+    for (int b = 0; b < 5 && b != -1; b++){
+        if (Bullets[b].isActive() == false){
+            bulletSlot = b;
+            break;
+        }
+    }
+    Bullets[bulletSlot].Shoot(Entities[0].getXPos(), Entities[0].getYPos(), 0);
+}
 void GameApp::initializeAssets(){
     //Initialize enemies
     //0 = player
@@ -153,7 +158,7 @@ void GameApp::initializeAssets(){
     //Enemies
     for(int rows = 0; rows < 3; rows++){
         for(int num = 0; num < 5; num++){
-            Entities.push_back(Entity(-1.0+num*0.5, 0.8-rows*0.2, 0.15, 0.15, 1, 3 - rows));
+            Entities.push_back(Entity(-1.0+num*0.5, 0.8-rows*0.2, 0.15, 0.15, 3-rows, 3 - rows));
         }
     }
     //Blocks
@@ -163,7 +168,7 @@ void GameApp::initializeAssets(){
     
     //Bullets
     for (int b = 0; b < 10; b++){
-        Bullets.push_back(Bullet(0.0, 0.0, 0.03, 0.1, 0));
+        Bullets.push_back(Bullet(0.0, 0.0, 0.03, 0.06, 0));
     }
 
 }

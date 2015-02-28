@@ -23,9 +23,20 @@ public:
     void moveRight(float elapsed);
     void AIMove(float elapsed);
     void reverseAIMove();
+    
     bool checkWallCollision();
+    
+    void hitpointMod(int damage);
     float getXPos();
     float getYPos();
+    
+    float getHeight();
+    float getWidth();
+    bool isActive();
+    int getHP();
+    void destroyEntity();
+    
+
     
 private:
     int hitpoints;

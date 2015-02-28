@@ -2,9 +2,9 @@
 #define __NYUCodebase__gameapp__
 
 #include <stdio.h>
+#pragma once
 
 #endif /* defined(__NYUCodebase__gameapp__) */
-#include "entity.h"
 #include "bullet.h"
 #include <vector>
 #include "string"
@@ -44,4 +44,5 @@ private:
     GLuint sprites;
     int entityType;
     const Uint8 *keys;
+    float shootTimer = 0;
 };

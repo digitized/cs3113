@@ -150,3 +150,27 @@ float Entity::getXPos(){
 float Entity::getYPos(){
     return ypos;
 }
+
+float Entity::getHeight(){
+    return height;
+}
+
+float Entity::getWidth(){
+    return width;
+}
+
+void Entity::hitpointMod(int damage){
+    hitpoints += damage;
+}
+
+int Entity::getHP(){
+    return hitpoints;
+}
+
+void Entity::destroyEntity(){
+    active = false;
+}
+
+bool Entity::isActive(){
+    return active;
+}

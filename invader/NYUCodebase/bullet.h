@@ -5,13 +5,18 @@
 //  Created by Alexander Lee on 2/28/15.
 //  Copyright (c) 2015 Ivan Safrin. All rights reserved.
 //
-#ifndef NYUCodebase_bullet_h
-#define NYUCodebase_bullet_h
+#pragma once
+#include "entity.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_image.h>
+#ifndef NYUCodebase_bullet_h
+#define NYUCodebase_bullet_h
+
 
 #endif
+
+#include <vector>
 
 
 class Bullet{
@@ -23,7 +28,7 @@ public:
     
     void DrawBullet(GLint texture);
     
-    void updateBullet(float eslapsed);
+    void updateBullet(float elapsed, std::vector<Entity>* entities);
 private:
     bool active;
     float xpos;
