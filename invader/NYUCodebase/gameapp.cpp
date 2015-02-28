@@ -1,11 +1,3 @@
-//
-//  gameapp.cpp
-//  NYUCodebase
-//
-//  Created by Alexander Lee on 2/26/15.
-//  Copyright (c) 2015 Ivan Safrin. All rights reserved.
-//
-
 #include "gameapp.h"
 
 GameApp::GameApp(){
@@ -14,6 +6,7 @@ GameApp::GameApp(){
     lastFrameTicks = 0.0f;
     state = 1;
     keys = SDL_GetKeyboardState(NULL);
+    
 }
 
 GameApp::~GameApp(){
@@ -65,6 +58,7 @@ void GameApp::RenderMenu(){
 
 void GameApp::RenderGame(){
     GameApp::DrawEntity();
+    DrawBullets();
     SDL_GL_SwapWindow(displayWindow);
 }
 
@@ -81,16 +75,31 @@ void GameApp::UpdateMenu(){
     }
 
 }
+void GameApp::PlayerFire(){
+    int bulletSlot = -1;
+    
+    for (int b = 0; b < 10 && b != -1; b++){
+        if (Bullets[b].isActive() == false){
+            bulletSlot = b;
+            break;
+        }
+    }
+    Bullets[bulletSlot].Shoot(Entities[0].getXPos(), Entities[0].getYPos(), 0);
+}
 void GameApp::UpdateGame(float elapsed){
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
             done = true; }
+        else if(keys[SDL_SCANCODE_SPACE]) { // Shoot
+            GameApp::PlayerFire();
+        }
     }
-    if(keys[SDL_SCANCODE_LEFT]) {
+    if(keys[SDL_SCANCODE_LEFT]) {         // Move Left
         Entities[0].moveLeft(elapsed);
-    } else if(keys[SDL_SCANCODE_RIGHT]) {
+    } else if(keys[SDL_SCANCODE_RIGHT]) { // Move Right
         Entities[0].moveRight(elapsed);
     }
+    
     bool hasCollided = false;
     for(int enemy = 1; enemy < 16; enemy++){
         if(Entities[enemy].checkWallCollision()){
@@ -104,6 +113,9 @@ void GameApp::UpdateGame(float elapsed){
     }
     for(int enemy = 1; enemy < 16; enemy++){
         Entities[enemy].AIMove(elapsed);
+    }
+    for(int bulletIndex = 0; bulletIndex < 10; bulletIndex++){
+        Bullets[bulletIndex].updateBullet(elapsed);
     }
     
 }
@@ -147,6 +159,11 @@ void GameApp::initializeAssets(){
     //Blocks
     for(int blocks = 0; blocks < 3; blocks++){
         Entities.push_back(Entity(-0.65+blocks*0.7, -0.5, 0.3,0.3, 5, 4));
+    }
+    
+    //Bullets
+    for (int b = 0; b < 10; b++){
+        Bullets.push_back(Bullet(0.0, 0.0, 0.03, 0.1, 0));
     }
 
 }
@@ -203,5 +220,13 @@ void GameApp::DrawEntity(){
     }
 //    Entities[0].DrawSprite(sprites);
 //    Entities[1].DrawSprite(sprites);
+}
+
+void GameApp::DrawBullets(){
+    for(int b = 0; b < 10; b++){
+        if(Bullets[b].isActive()){
+            Bullets[b].DrawBullet(sprites);
+        }
+    }
 }
 

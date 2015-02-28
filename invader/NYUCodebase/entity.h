@@ -24,6 +24,8 @@ public:
     void AIMove(float elapsed);
     void reverseAIMove();
     bool checkWallCollision();
+    float getXPos();
+    float getYPos();
     
 private:
     int hitpoints;

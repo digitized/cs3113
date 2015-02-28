@@ -41,66 +41,67 @@ void Entity::DrawSprite(GLint texture) {
     float wspec = 0;
     float hspec = 0;
 
-    
-    if (type == 0){
-        xcoord = player[0]/256.0;
-        ycoord = player[1]/256.0;
-        wspec = player[2]/256.0;
-        hspec = player[3]/256.0;
-    }
-    else if(type == 1){
-        xcoord = enemy1[0]/256.0;
-        ycoord = enemy1[1]/256.0;
-        wspec = enemy1[2]/256.0;
-        hspec = enemy1[3]/256.0;
-    }
+    if (active == true) { //Draw if still alive
+        if (type == 0){
+            xcoord = player[0]/256.0;
+            ycoord = player[1]/256.0;
+            wspec = player[2]/256.0;
+            hspec = player[3]/256.0;
+        }
+        else if(type == 1){
+            xcoord = enemy1[0]/256.0;
+            ycoord = enemy1[1]/256.0;
+            wspec = enemy1[2]/256.0;
+            hspec = enemy1[3]/256.0;
+        }
 
-    else if(type == 2){
-        xcoord = enemy2[0]/256.0;
-        ycoord = enemy2[1]/256.0;
-        wspec = enemy2[2]/256.0;
-        hspec = enemy2[3]/256.0;
-    }
+        else if(type == 2){
+            xcoord = enemy2[0]/256.0;
+            ycoord = enemy2[1]/256.0;
+            wspec = enemy2[2]/256.0;
+            hspec = enemy2[3]/256.0;
+        }
 
-    
-    else if(type == 3){
-        xcoord = enemy3[0]/256.0;
-        ycoord = enemy3[1]/256.0;
-        wspec = enemy3[2]/256.0;
-        hspec = enemy3[3]/256.0;
-    }
-    
-    else if(type == 4){
-        xcoord = block[0]/256.0;
-        ycoord = block[1]/256.0;
-        wspec = block[2]/256.0;
-        hspec = block[3]/256.0;
-    }
-    
-    
-    
+        
+        else if(type == 3){
+            xcoord = enemy3[0]/256.0;
+            ycoord = enemy3[1]/256.0;
+            wspec = enemy3[2]/256.0;
+            hspec = enemy3[3]/256.0;
+        }
+        
+        else if(type == 4){
+            xcoord = block[0]/256.0;
+            ycoord = block[1]/256.0;
+            wspec = block[2]/256.0;
+            hspec = block[3]/256.0;
+        }
+        
+        
+        
 
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    
-    glMatrixMode(GL_MODELVIEW);
-    
-    glLoadIdentity();
-    glTranslatef(xpos, ypos, 0.0);
-    
-    GLfloat quad[] = {width*-0.5f, height*0.5f, width*-0.5f, height*-0.5f, width*0.5f, height*-0.5f, width*0.5f, height*0.5f};
-    glVertexPointer(2, GL_FLOAT, 0, quad);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    
-    GLfloat quadUVs[] = {xcoord, ycoord, xcoord, ycoord + hspec, xcoord+wspec, ycoord+hspec, xcoord+wspec, ycoord};
-    
-    glTexCoordPointer(2, GL_FLOAT, 0, quadUVs);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    glDrawArrays(GL_QUADS, 0, 4);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        
+        glMatrixMode(GL_MODELVIEW);
+        
+        glLoadIdentity();
+        glTranslatef(xpos, ypos, 0.0);
+        
+        GLfloat quad[] = {width*-0.5f, height*0.5f, width*-0.5f, height*-0.5f, width*0.5f, height*-0.5f, width*0.5f, height*0.5f};
+        glVertexPointer(2, GL_FLOAT, 0, quad);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        
+        GLfloat quadUVs[] = {xcoord, ycoord, xcoord, ycoord + hspec, xcoord+wspec, ycoord+hspec, xcoord+wspec, ycoord};
+        
+        glTexCoordPointer(2, GL_FLOAT, 0, quadUVs);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        glDrawArrays(GL_QUADS, 0, 4);
+    }
 }
 
 bool Entity::checkWallCollision(){
@@ -140,4 +141,12 @@ void Entity::AIMove(float elapsed){
     checkWallCollision();
     xpos += elapsed * 0.3 * xdir;
     
+}
+
+float Entity::getXPos(){
+    return xpos;
+}
+
+float Entity::getYPos(){
+    return ypos;
 }
