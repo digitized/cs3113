@@ -16,7 +16,8 @@
 
 class Entity{
 public:
-    Entity(float x, float y, float w, float h, int hp, int type);
+    Entity(float x, float y, float w, float h, int hp, int spriteType);
+    
     void DrawSprite(GLint texture);
     
 private:

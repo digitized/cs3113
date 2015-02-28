@@ -12,7 +12,7 @@ GameApp::GameApp(){
     Init();
     done = false;
     lastFrameTicks = 0.0f;
-    state = 0;
+    state = 1;
     keys = SDL_GetKeyboardState(NULL);
 }
 
@@ -28,7 +28,9 @@ void GameApp::Init(){
     glViewport(0, 0, 800, 600);
     glMatrixMode(GL_PROJECTION);
     glOrtho(-1.33, 1.33, -1.0, 1.0, -1.0, 1.0);
+    
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    
     font = LoadTexture("font1.png", GL_RGBA);
     sprites = LoadTexture("sprites.png", GL_RGBA);
     initializeAssets();
@@ -71,6 +73,7 @@ void GameApp::UpdateMenu(){
     if(keys[SDL_SCANCODE_RETURN]) {
         state = 1;
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glLoadIdentity();
     }
 
 }
@@ -109,7 +112,7 @@ void GameApp::initializeAssets(){
     
     //Player
 //    Entities.push_back(Entity(-0.1, -0.8, 5.0, 5.0, 10, 0));
-    Entity h = Entity(-0.1, -0.8, 5.0, 5.0, 10, 0);
+    Entity h(0.0, 0.0, 0.5, 0.5, 10, 0);
     Entities.push_back(h);
 
 }
