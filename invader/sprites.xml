@@ -1,8 +1,9 @@
 <TextureAtlas imagePath="sprites.png">
+	<SubTexture name="block.png" x="106" y="77" width="28" height="28"/>
 	<SubTexture name="enemy1.png" x="0" y="77" width="104" height="84"/>
-	<SubTexture name="enemy2.png" x="0" y="163" width="103" height="84"/>
-	<SubTexture name="enemy3.png" x="105" y="163" width="103" height="84"/>
-	<SubTexture name="enemybullet.png" x="106" y="116" width="9" height="37"/>
+	<SubTexture name="enemy2.png" x="105" y="163" width="103" height="84"/>
+	<SubTexture name="enemy3.png" x="0" y="163" width="103" height="84"/>
+	<SubTexture name="enemybullet.png" x="106" y="107" width="9" height="37"/>
 	<SubTexture name="player.png" x="0" y="0" width="112" height="75"/>
-	<SubTexture name="playerbullet.png" x="106" y="77" width="9" height="37"/>
+	<SubTexture name="playerbullet.png" x="114" y="0" width="9" height="37"/>
 </TextureAtlas>

@@ -133,7 +133,7 @@ void GameApp::initializeAssets(){
     //Initialize enemies
     //0 = player
     //1 - 15 = enemies
-    //16 - 19 = Blocks
+    //16 - 18 = Blocks
     
     //Player
     Entities.push_back(Entity(0.0, -0.9, 0.15, 0.15, 10, 0));
@@ -143,6 +143,10 @@ void GameApp::initializeAssets(){
         for(int num = 0; num < 5; num++){
             Entities.push_back(Entity(-1.0+num*0.5, 0.8-rows*0.2, 0.15, 0.15, 1, 3 - rows));
         }
+    }
+    //Blocks
+    for(int blocks = 0; blocks < 3; blocks++){
+        Entities.push_back(Entity(-0.65+blocks*0.7, -0.5, 0.3,0.3, 5, 4));
     }
 
 }
@@ -194,9 +198,8 @@ void GameApp::DrawText(int fontTexture, string text, float size, float spacing, 
 }
 
 void GameApp::DrawEntity(){
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < 19; i++){
         Entities[i].DrawSprite(sprites);
-
     }
 //    Entities[0].DrawSprite(sprites);
 //    Entities[1].DrawSprite(sprites);
