@@ -4,7 +4,7 @@ GameApp::GameApp(){
     Init();
     done = false;
     lastFrameTicks = 0.0f;
-    state = 1;
+    state = 0;
     keys = SDL_GetKeyboardState(NULL);
     
 }
@@ -23,7 +23,7 @@ void GameApp::Init(){
     glMatrixMode(GL_MODELVIEW);
     
     glOrtho(-1.33, 1.33, -1.0, 1.0, -1.0, 1.0);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
     font = LoadTexture("font1.png", GL_RGBA);
     sprites = LoadTexture("sprites.png", GL_RGBA);
@@ -68,12 +68,12 @@ void GameApp::Render(){
 
 void GameApp::RenderMenu(){
     glLoadIdentity();
-    glTranslatef(-0.4f, 0.5f, 0.0f);
+    glTranslatef(-0.45f, 0.5f, 0.0f);
     GameApp::DrawText(font, "Main Menu", 0.1f, 0.01f, 1.0f, 1.0f, 1.0f, 1.0f);
     
     glLoadIdentity();
-    glTranslatef(-0.4f, 0.2f, 0.0f);
-    GameApp::DrawText(font, "Press Enter to Start", 0.1f, 0.01f, 0.0f, 0.0f, 0.0f, 1.0f);
+    glTranslatef(-0.85f, -0.2f, 0.0f);
+    GameApp::DrawText(font, "Press Enter to Start", 0.09f, 0.001f, 1.0f, 1.0f, 1.0f, 1.0f);
     SDL_GL_SwapWindow(displayWindow);
 }
 
@@ -82,6 +82,7 @@ void GameApp::RenderGame(){
     DrawBullets();
     SDL_GL_SwapWindow(displayWindow);
 }
+
 
 ////UPDATE
 void GameApp::UpdateMenu(){
@@ -96,6 +97,20 @@ void GameApp::UpdateMenu(){
         glLoadIdentity();
     }
 
+}
+
+void GameApp::UpdateWin(){
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+            done = true; }
+    }
+}
+
+void GameApp::UpdateLoss(){
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+            done = true; }
+    }
 }
 
 void GameApp::EnemyFire(){
@@ -174,6 +189,12 @@ void GameApp::Update(float elapsed){
         case 1:
             UpdateGame(elapsed);
             break;
+        case 2:
+            UpdateWin();
+            break;
+        case 3:
+            UpdateLoss();
+            break;
     }
 
 }
@@ -205,7 +226,7 @@ void GameApp::initializeAssets(){
     //16 - 18 = Blocks
     
     //Player
-    Entities.push_back(Entity(0.0, -0.9, 0.15, 0.15, 1, 0));
+    Entities.push_back(Entity(0.0, -0.9, 0.15, 0.15, 10, 0));
     
     //Enemies
     for(int rows = 0; rows < 3; rows++){

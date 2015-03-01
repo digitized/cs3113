@@ -20,15 +20,15 @@ public:
     void Render();
     void RenderMenu();
     void RenderGame();
+    void RenderWin();
+    void RenderLoss();
     
     void UpdateMenu();
     void UpdateGame(float elapsed);
+    void UpdateWin();
+    void UpdateLoss();
     void Update(float elapsed);
     bool UpdateAndRender();
-    
-    void RenderWin();
-    
-    void RenderLoss();
     
     void initializeAssets();
     
