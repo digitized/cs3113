@@ -19,9 +19,10 @@ void GameApp::Init(){
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
     glViewport(0, 0, 800, 600);
-    glMatrixMode(GL_PROJECTION);
-    glOrtho(-1.33, 1.33, -1.0, 1.0, -1.0, 1.0);
+
+    glMatrixMode(GL_MODELVIEW);
     
+    glOrtho(-1.33, 1.33, -1.0, 1.0, -1.0, 1.0);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     
     font = LoadTexture("font1.png", GL_RGBA);
@@ -72,7 +73,7 @@ void GameApp::RenderMenu(){
     
     glLoadIdentity();
     glTranslatef(-0.4f, 0.2f, 0.0f);
-    GameApp::DrawText(font, "Start", 0.1f, 0.01f, 0.0f, 0.0f, 0.0f, 1.0f);
+    GameApp::DrawText(font, "Press Enter to Start", 0.1f, 0.01f, 0.0f, 0.0f, 0.0f, 1.0f);
     SDL_GL_SwapWindow(displayWindow);
 }
 
@@ -91,6 +92,7 @@ void GameApp::UpdateMenu(){
     if(keys[SDL_SCANCODE_RETURN]) {
         state = 1;
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
         glLoadIdentity();
     }
 
@@ -131,7 +133,7 @@ void GameApp::UpdateGame(float elapsed){
     }
     
     //Enemy Shooting AI
-    if (enemyTimer >= 2.0) {
+    if (enemyTimer >= 1.0) {
         EnemyFire();
         enemyTimer = 0;
     }
@@ -171,7 +173,6 @@ void GameApp::Update(float elapsed){
             break;
         case 1:
             UpdateGame(elapsed);
-
             break;
     }
 
@@ -204,12 +205,12 @@ void GameApp::initializeAssets(){
     //16 - 18 = Blocks
     
     //Player
-    Entities.push_back(Entity(0.0, -0.9, 0.15, 0.15, 10, 0));
+    Entities.push_back(Entity(0.0, -0.9, 0.15, 0.15, 1, 0));
     
     //Enemies
     for(int rows = 0; rows < 3; rows++){
         for(int num = 0; num < 5; num++){
-            Entities.push_back(Entity(-1.0+num*0.5, 0.8-rows*0.2, 0.15, 0.15, 3-rows, 3 - rows));
+            Entities.push_back(Entity(-0.7+num*0.3, 0.8-rows*0.2, 0.15, 0.15, 3-rows, 3 - rows));
         }
     }
     //Blocks

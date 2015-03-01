@@ -105,7 +105,7 @@ void Entity::DrawSprite(GLint texture) {
 }
 
 bool Entity::checkWallCollision(){
-    if ((xpos < -1.25 or xpos > 1.25) && active == true){
+    if ((xpos < -0.9 or xpos > 0.9) && active == true){
         return true;
     }
     else{
@@ -114,24 +114,24 @@ bool Entity::checkWallCollision(){
 }
 
 void Entity::moveLeft(float elapsed){
-    if (xpos >= -1.25){
+    if (xpos >= -0.9){
         xpos -= elapsed;
     }
 }
 
 void Entity::moveRight(float elapsed){
-    if (xpos <= 1.25) {
+    if (xpos <= 0.9) {
         xpos += elapsed;
     }
 
 }
 
 void Entity::reverseAIMove(){
-    if (xpos <= -1.25){
-        xpos = -1.24;
+    if (xpos <= -0.9){
+        xpos = -0.9;
     }
-    else if (xpos > 1.25){
-        xpos = 1.24;
+    else if (xpos > 0.9){
+        xpos = 0.9;
     }
     xdir *= -1.0;
     ypos -= 0.02;
