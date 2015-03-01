@@ -25,13 +25,28 @@ void Bullet::Shoot(float x, float y, int s)
     active = true;
 }
 
+void Bullet::EnemyShoot(float x, float y, int s){
+    xpos = x;
+    ypos = y-0.15;
+    source = s;
+    active = true;
+}
+
 bool Bullet::isActive(){
     return active;
 }
 
-void Bullet::updateBullet(float elapsed, std::vector<Entity> *entities){
+void Bullet::updateBullet(float elapsed, std::vector<Entity> *entities, int* numEnemy){
     if (active == true) {
-        ypos += elapsed * 0.3;
+        
+        //Bullet Speed
+        if (source == 0) {
+            ypos += elapsed * 0.8;
+        }
+        else if (source == 1){
+            ypos -= elapsed * 0.8;
+        }
+        
     }
     if (ypos >= 1.0 || ypos <= -1.0){
         active = false;
@@ -52,19 +67,49 @@ void Bullet::updateBullet(float elapsed, std::vector<Entity> *entities){
                 //Check Collision
                 if((bulletTop > entityBottom and bulletTop < entityTop) || (bulletBottom > entityBottom and bulletBottom < entityTop)){
                     if (bulletLeft < entityRight && bulletLeft > entityLeft){
-                        active = false;
-                        (*entities)[eIndex].hitpointMod(-1);
-                        if ((*entities)[eIndex].getHP() <= 0){
-                            (*entities)[eIndex].destroyEntity();
+                        if (source == 0 && eIndex > 0) {
+                            active = false;
+                            (*entities)[eIndex].hitpointMod(-1);
+                            if ((*entities)[eIndex].getHP() <= 0){
+                                (*entities)[eIndex].destroyEntity();
+                                if (eIndex >= 1 || eIndex <= 15) {
+                                    *numEnemy -= 1;
+                                }
+                            }
                         }
+                        else if(source == 1 && (eIndex == 0 || eIndex >= 16)){
+                            active = false;
+                            (*entities)[eIndex].hitpointMod(-1);
+                            if ((*entities)[eIndex].getHP() <= 0){
+                                (*entities)[eIndex].destroyEntity();
+                            }
+
+                        }
+                        
                         
                     }
                     else if (bulletRight > entityLeft && bulletRight < entityRight){
                         active = false;
                         (*entities)[eIndex].hitpointMod(-1);
-                        if ((*entities)[eIndex].getHP() <= 0){
-                            (*entities)[eIndex].destroyEntity();
+                        if (source == 0 && eIndex > 0) {
+                            active = false;
+                            (*entities)[eIndex].hitpointMod(-1);
+                            if ((*entities)[eIndex].getHP() <= 0){
+                                (*entities)[eIndex].destroyEntity();
+                                if (eIndex >= 1 || eIndex <= 15) {
+                                    *numEnemy -= 1;
+                                }
+                            }
                         }
+                        else if(source == 1 && eIndex == 0){
+                            active = false;
+                            (*entities)[eIndex].hitpointMod(-1);
+                            if ((*entities)[eIndex].getHP() <= 0){
+                                (*entities)[eIndex].destroyEntity();
+                            }
+                            
+                        }
+
                     }
                 }
             }

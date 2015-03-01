@@ -28,7 +28,21 @@ void GameApp::Init(){
     sprites = LoadTexture("sprites.png", GL_RGBA);
     initializeAssets();
 }
+//WIN
+void GameApp::RenderWin(){
+    glLoadIdentity();
+    glTranslatef(-0.4f, 0.5f, 0.0f);
+    GameApp::DrawText(font, "YOU WIN", 0.1f, 0.01f, 1.0f, 1.0f, 1.0f, 1.0f);
+    SDL_GL_SwapWindow(displayWindow);
+}
 
+//LOSS
+void GameApp::RenderLoss(){
+    glLoadIdentity();
+    glTranslatef(-0.4f, 0.5f, 0.0f);
+    GameApp::DrawText(font, "YOU LOSE", 0.1f, 0.01f, 1.0f, 1.0f, 1.0f, 1.0f);
+    SDL_GL_SwapWindow(displayWindow);
+}
 
 ////RENDER
 void GameApp::Render(){
@@ -39,6 +53,12 @@ void GameApp::Render(){
             break;
         case 1:
             RenderGame();
+            break;
+        case 2:
+            RenderWin();
+            break;
+        case 3:
+            RenderLoss();
             break;
     }
     
@@ -76,11 +96,26 @@ void GameApp::UpdateMenu(){
 
 }
 
+void GameApp::EnemyFire(){
+    int bulletSlot = 4;
+    
+    for (int b = 0; b < 5 && b != 4; b++){
+        if (Bullets[b].isActive() == false){
+            bulletSlot = b;
+            break;
+        }
+    }
+    int enemyNum = fmod(enemyTimer * 1000, 15)+1;
+    Bullets[bulletSlot].EnemyShoot(Entities[enemyNum].getXPos(), Entities[enemyNum].getYPos(), 1);
+}
+
 void GameApp::UpdateGame(float elapsed){
     shootTimer += elapsed;
+    enemyTimer += elapsed;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
             done = true; }
+        //Player Shooting
         else if(keys[SDL_SCANCODE_SPACE]) { // Shoot
             if (shootTimer > 0.3){
                 GameApp::PlayerFire();
@@ -95,6 +130,13 @@ void GameApp::UpdateGame(float elapsed){
         Entities[0].moveRight(elapsed);
     }
     
+    //Enemy Shooting AI
+    if (enemyTimer >= 2.0) {
+        EnemyFire();
+        enemyTimer = 0;
+    }
+    
+    //Check enemy side wall collision
     bool hasCollided = false;
     for(int enemy = 1; enemy < 16; enemy++){
         if(Entities[enemy].checkWallCollision()){
@@ -110,7 +152,15 @@ void GameApp::UpdateGame(float elapsed){
         Entities[enemy].AIMove(elapsed);
     }
     for(int bulletIndex = 0; bulletIndex < 10; bulletIndex++){
-        Bullets[bulletIndex].updateBullet(elapsed, &Entities);
+        Bullets[bulletIndex].updateBullet(elapsed, &Entities, &numEnemy);
+    }
+    //Player wins
+    if (numEnemy <= 0) {
+        state = 2;
+    }
+    //Player loss
+    if (Entities[0].getHP() <= 0) {
+        state = 3;
     }
     
 }
@@ -121,6 +171,7 @@ void GameApp::Update(float elapsed){
             break;
         case 1:
             UpdateGame(elapsed);
+
             break;
     }
 

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NYUCodebase/gameapp.h"
-            timestampString = "446852773.926198"
+            timestampString = "446859264.366873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "class GameApp"
             landmarkType = "3">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NYUCodebase/bullet.cpp"
-            timestampString = "446856126.171316"
+            timestampString = "446859264.366873"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "Bullet::updateBullet(float elapsed, std::vector&lt;Entity&gt; *entities)"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "Bullet::updateBullet(float elapsed, std::vector&lt;Entity&gt; *entities, int* numEnemy)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NYUCodebase/gameapp.cpp"
-            timestampString = "446857570.348118"
+            timestampString = "446859639.869572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "GameApp::UpdateGame(float elapsed)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NYUCodebase/gameapp.cpp"
-            timestampString = "446857570.348118"
+            timestampString = "446859639.869572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "GameApp::UpdateGame(float elapsed)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,12 +90,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NYUCodebase/gameapp.cpp"
-            timestampString = "446857570.348118"
+            timestampString = "446859639.869572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "GameApp::UpdateGame(float elapsed)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NYUCodebase/gameapp.cpp"
+            timestampString = "446859679.420565"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "GameApp::EnemyFire()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

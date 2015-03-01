@@ -20,10 +20,15 @@ public:
     void Render();
     void RenderMenu();
     void RenderGame();
+    
     void UpdateMenu();
     void UpdateGame(float elapsed);
     void Update(float elapsed);
     bool UpdateAndRender();
+    
+    void RenderWin();
+    
+    void RenderLoss();
     
     void initializeAssets();
     
@@ -32,6 +37,7 @@ public:
     void DrawEntity();
     void DrawBullets();
     void PlayerFire();
+    void EnemyFire();
 private:
     int state;
     bool done;
@@ -45,4 +51,6 @@ private:
     int entityType;
     const Uint8 *keys;
     float shootTimer = 0;
+    float enemyTimer = 0;
+    int numEnemy = 15;
 };

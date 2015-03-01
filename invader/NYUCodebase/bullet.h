@@ -26,9 +26,11 @@ public:
     
     void Shoot(float x, float y, int s);
     
+    void EnemyShoot(float x, float y, int s);
+    
     void DrawBullet(GLint texture);
     
-    void updateBullet(float elapsed, std::vector<Entity>* entities);
+    void updateBullet(float elapsed, std::vector<Entity>* entities, int* numEnemy);
 private:
     bool active;
     float xpos;
