@@ -78,6 +78,9 @@ void GameApp::RenderMenu(){
 }
 
 void GameApp::RenderGame(){
+    glLoadIdentity();
+    glTranslatef(-0.8f, 0.9f, 0.0f);
+    GameApp::DrawText(font, "HP: "+to_string(Entities[0].getHP()), 0.09f, 0.01f, 1.0f, 1.0f, 1.0f, 1.0f);
     GameApp::DrawEntity();
     DrawBullets();
     SDL_GL_SwapWindow(displayWindow);
